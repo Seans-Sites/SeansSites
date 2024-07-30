@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L8MNMS0TFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-L8MNMS0TFM');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DR.Mario</title>
+
+    <style>
+        .borders {
+            /* border: 1px solid red; */
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background-image: url("assets/mapa/tile_res.png");
+            position: relative;
+            user-select: none;
+        }
+
+        #playboard_div {
+            box-sizing: border-box;
+            position: absolute;
+            top: 201px;
+            width: 254px;
+            left: 280px;
+            height: 401px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            height: 100%;
+        }
+
+        td {
+            box-sizing: border-box;
+            /* border: 1px solid rgba(255, 255, 255, 0.11); */
+            border: 1px solid transparent;
+            /* color: white; */
+            color: transparent;
+            width: 25.3px;
+            height: 22.2167px;
+            text-align: center;
+            padding: 1px;
+            background-origin: content-box;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .ghost {
+            /* border: 1px dotted white; */
+            border: 1px dotted transparent;
+        }
+
+        #cords {
+            color: white;
+            position: fixed;
+            font-size: 13px;
+            display: none
+        }
+
+        #bottle {
+            background-image: url("assets/mapa/bottle.png");
+            background-repeat: no-repeat;
+            position: absolute;
+            width: 254px;
+            height: 490px;
+            background-size: contain;
+            top: 112px;
+            left: 280px;
+            /* display: none; */
+        }
+
+        #notes_score {
+            background-image: url("assets/mapa/notes_score.png");
+            position: absolute;
+            width: 230px;
+            height: 218px;
+            background-size: contain;
+            top: 94px;
+            left: 24px;
+        }
+
+        #notes_viruses {
+            background-image: url("assets/mapa/notes_viruses.png");
+            position: absolute;
+            width: 204px;
+            height: 284px;
+            background-size: contain;
+            top: 338px;
+            left: 560px;
+        }
+
+        #mario {
+            background-image: url("assets/mapa/mario_border.png");
+            position: absolute;
+            width: 179px;
+            height: 157px;
+            background-size: contain;
+            top: 177px;
+            left: 559px;
+            /* display: none; */
+        }
+
+        #logo {
+            background-image: url("assets/mapa/logo.png");
+            position: absolute;
+            width: 281px;
+            height: 84px;
+            background-size: contain;
+            top: 69px;
+            left: 505px;
+            /* display: none; */
+        }
+
+        #lupa {
+            background-image: url("assets/mapa/lupa.png");
+            position: absolute;
+            width: 253px;
+            height: 243px;
+            background-size: contain;
+            top: 357px;
+            left: 1px;
+        }
+
+        #plansza {
+            position: absolute;
+            width: 815px;
+            height: 668px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* background-image: url("assets/mapa/plansza_resample.png"); */
+            /* background-image: url("assets/mapa/plansza.png"); */
+            /* background-image: url("assets/mapa/plansza_won.png"); */
+            /* background-image: url("assets/rzut/m14.png"); */
+        }
+
+        .number {
+            background-image: url("assets/cyfry/0.png");
+            position: absolute;
+            width: 22px;
+            height: 20px;
+        }
+
+        .top {
+            top: 84px;
+        }
+
+        #top_1,
+        #score_1 {
+            left: 27px;
+        }
+
+        #top_2,
+        #score_2 {
+            left: 52px;
+        }
+
+        #top_3,
+        #score_3 {
+            left: 78px;
+        }
+
+        #top_4,
+        #score_4 {
+            left: 103px;
+        }
+
+        #top_5,
+        #score_5 {
+            left: 129px;
+        }
+
+        #top_6,
+        #score_6 {
+            left: 154px;
+        }
+
+        #top_7,
+        #score_7 {
+            left: 180px;
+        }
+
+        .score {
+            top: 152px;
+        }
+
+        .virus {
+            top: 219px;
+        }
+
+        #virus_1 {
+            left: 127px;
+        }
+
+        #virus_2 {
+            left: 153px;
+        }
+
+        /* to sa wirusy w lupce */
+        .virus_lupa {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            border: 1px solid transparent;
+            width: 75px;
+            height: 63px;
+            background-origin: content-box;
+            box-sizing: border-box;
+        }
+
+
+        #virus_yellow {
+            background-image: url("assets/viruses_lupa/yellow/normal/yellow_v2.png");
+            top: 45px;
+            left: 97px;
+        }
+
+        #virus_red {
+            background-image: url("assets/viruses_lupa/red/normal/red_v2.png");
+            top: 123px;
+            left: 52px;
+        }
+
+        #virus_blue {
+            background-image: url("assets/viruses_lupa/blue/normal/blue_v2.png");
+            top: 130px;
+            left: 137px;
+        }
+
+        #lupa_inner {
+            position: relative;
+            width: 195px;
+            height: 195px;
+            top: 12px;
+            left: 42px;
+            border: 1px solid transparent;
+        }
+
+        #lupa_center {
+            border: 1px solid greenyellow;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        /* #throw_area {
+            width: 100%;
+            height: 100%;
+            background-color: chartreuse;
+            position: relative;
+        } */
+
+        .throw_pill {
+            position: absolute;
+            width: 23px;
+            height: 19px;
+        }
+
+        #throw_pill_first {
+            top: 195px;
+            left: 604px;
+
+        }
+
+        #throw_pill_second {
+            top: 195px;
+            left: 630px;
+
+        }
+
+        #won {
+            background-image: url("assets/mapa/game_won.png");
+            position: absolute;
+            top: 248px;
+            left: 308px;
+            width: 198px;
+            height: 196px;
+            display: none;
+        }
+
+        #lost {
+            background-image: url("assets/mapa/game_over.png");
+            position: absolute;
+            top: 270px;
+            left: 309px;
+            width: 197px;
+            height: 151px;
+            display: none;
+        }
+
+        #end {
+            background-color: black;
+            position: absolute;
+            top: 225px;
+            left: 307px;
+            width: 200px;
+            height: 354px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="plansza" class="borders">
+
+
+        <div id="background">
+            <div style="position: relative;">
+                <div class="borders" class="border" id="bottle"></div>
+                <div class="borders" id="notes_score">
+                    <div style="position: relative;">
+                        <div class="number top borders" id="top_1"></div>
+                        <div class="number top borders" id="top_2"></div>
+                        <div class="number top borders" id="top_3"></div>
+                        <div class="number top borders" id="top_4"></div>
+                        <div class="number top borders" id="top_5"></div>
+                        <div class="number top borders" id="top_6"></div>
+                        <div class="number top borders" id="top_7"></div>
+
+                        <div class="number score borders" id="score_1"></div>
+                        <div class="number score borders" id="score_2"></div>
+                        <div class="number score borders" id="score_3"></div>
+                        <div class="number score borders" id="score_4"></div>
+                        <div class="number score borders" id="score_5"></div>
+                        <div class="number score borders" id="score_6"></div>
+                        <div class="number score borders" id="score_7"></div>
+                    </div>
+                </div>
+                <div class="borders" id="notes_viruses">
+                    <div style="position: relative;">
+                        <div class="number virus borders" id="virus_1"></div>
+                        <div class="number virus borders" id="virus_2"></div>
+                    </div>
+                </div>
+                <div class="borders" id="mario"></div>
+                <div class="borders" id="logo"></div>
+                <div class="borders" id="lupa">
+                    <div id="lupa_inner">
+                        <div id="lupa_center"></div>
+                        <div class="virus_lupa borders" id="virus_yellow"></div>
+                        <div class="virus_lupa borders" id="virus_red"></div>
+                        <div class="virus_lupa borders" id="virus_blue"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="playboard_div">
+            <div id="position: relative; width:100%; height:100%">
+                <table id="playboard_table"></table>
+            </div>
+        </div>
+
+        <div class="throw_pill borders" id="throw_pill_first"></div>
+        <div class="throw_pill borders" id="throw_pill_second"></div>
+
+
+        <div id="end"></div>
+        <div class="borders" id="won"></div>
+        <div class="borders" id="lost"></div>
+
+
+
+    </div>
+    <p id="cords"></p>
+
+
+    <script>
+        "use strict"
+
+        let log = false
+        function ifLog(text, style) {
+            if (log == true) {
+                if (style != undefined) {
+                    console.log(text, style)
+                } else {
+                    console.log(text)
+                }
+            }
+        }
+
+        // deklarujemy funkcję do losowana liczb z przedziału domkniętego
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        class Playboard {
+            constructor() {
+                this.pill = undefined
+                this.playboard_table = document.getElementById('playboard_table')
+                this.won_element = document.getElementById('won')
+                this.lost_element = document.getElementById('lost')
+                this.end_element = document.getElementById('end')
+                this.playboard_table.innerHTML = ''
+                this.playboard_data = [] //plansza z danymi ma wymiary 18/10 a do gry w tabelce 16/8 (czyli w danych jest dodatkowa obwódka do okoła, żeby łatwo było sprawdzać że nastapi kolizja i nie wychodzić poza planszę)
+
+                this.possible_virus_colors = ['#FFE638/*yellow*/', '#14A2D0/*blue*/', '#E22E49/*red*/'] //yellow, blue, red
+                this.viruses = {
+                    total: 4, //ilość losowanych virusów (nie zmieia się) - max to 80 - bo tylko tyle jest miejsc przeznaczonych na wirusy (czyli około 2/3 wysokości)
+                    left: 4, //ilość wirusów które zostały na planszy (zmniejsza się po zbiciu) - max to 80 - bo tylko tyle jest miejsc przeznaczonych na wirusy (czyli około 2/3 wysokości)
+                    colors: {
+                        yellow: 0,
+                        red: 0,
+                        blue: 0,
+                    },
+                    drawing_colors: {
+                        yellow: 0,
+                        red: 0,
+                        blue: 0,
+                    },
+                    places: {}
+                }
+
+                if (localStorage.getItem('top') == undefined) {
+                    this.top = 0
+                } else {
+                    this.top = localStorage.getItem('top') //pobierane z local storage a jeśli nie istnieje to default jest 0
+                }
+                this.score = 0
+                this.game_started = false
+                this.game_lost = false
+                this.game_won = false
+
+
+                // ustala ilość virusów danego kloru 
+                for (let nr = 1; nr <= this.viruses.total % 3; nr++) { // przejdzie raz, dwa albo wcale i wylosuje, których kolorów wirusów jest o jeden więcej
+                    while (true) {
+                        let drawn_color = this.possible_virus_colors[randomInt(0, 2)].split('*')[1]
+                        if (this.viruses.colors[drawn_color] == 0) {
+                            this.viruses.colors[drawn_color] = 1
+                            break
+                        }
+                    }
+                }
+                this.viruses.colors.yellow += Math.floor(this.viruses.total / 3)
+                this.viruses.colors.red += Math.floor(this.viruses.total / 3)
+                this.viruses.colors.blue += Math.floor(this.viruses.total / 3)
+
+                //ustala w jakich miejscach jest dany wirus 
+                for (let nr = 1; nr <= this.viruses.total; nr++) {
+                    while (true) {
+                        let line = randomInt(7, 16)
+                        let column = randomInt(1, 8)
+                        if (this.viruses.places[`x${column}y${line}`] == undefined) { // sprawdza czy taki obiekt nie był wylosowany, poprzez sprawdzenie, czy w obiekcie jest już klucz o danym id
+                            let drawan_color = this.possible_virus_colors[randomInt(0, 2)]
+                            if (this.viruses.drawing_colors[drawan_color.split('*')[1]] < this.viruses.colors[drawan_color.split('*')[1]]) { //sprawdza, czy dany kolor virusa ma jescze wolne miejsca do rozlokowania
+                                this.viruses.drawing_colors[drawan_color.split('*')[1]]++
+                                this.viruses.places[`x${column}y${line}`] = {
+                                    id: `x${column}y${line}`,
+                                    line: line,
+                                    column: column,
+                                    color: drawan_color,
+                                }
+                                break
+                            }
+                        }
+                    }
+                }
+
+                for (let linia = 0; linia <= 17; linia++) {
+                    // ifLog(`linia:${linia}`)
+                    let tr
+                    // if (linia != 0 && linia != 17) {
+                    tr = document.createElement('tr')
+                    tr.id = `x${linia}`
+                    // }
+                    let playboard_data_row = []
+                    for (let kolumna = 0; kolumna <= 9; kolumna++) {
+                        // ifLog(`    kolumna:${kolumna}`)
+                        let data_cell = {
+                            first: undefined,
+                            second: undefined,
+                            depends_on: undefined,
+                            text: '',
+                            html_element: undefined,
+                            id: `x${kolumna}y${linia}`,
+                            column: kolumna,
+                            line: linia,
+                            color: undefined,
+                            img: undefined,
+                            state: 'taken', //taken, temp_taken, free, virus
+                        }
+                        // if (kolumna != 0 && kolumna != 9 && linia != 0 && linia != 17) {
+                        let td = document.createElement('td')
+                        data_cell.state = 'free'
+                        data_cell.html_element = td
+                        td.id = data_cell.id
+                        td.className = 'borders'
+                        td.addEventListener('mouseover', function () {
+                            document.getElementById('cords').innerHTML = `${this.id}</br>`
+                        })
+                        td.addEventListener('mouseover', function () {
+                            document.getElementById('cords').innerHTML += '</br>'
+                            for (let [key, value] of Object.entries(this.playboard_data[linia][kolumna])) {
+                                if (typeof value == 'object') {
+                                    document.getElementById('cords').innerHTML += `${key}: ${JSON.stringify(value, null, '</br>  ')}</br>`
+                                } else {
+                                    document.getElementById('cords').innerHTML += `${key}: ${value}</br>`
+                                }
+
+                            }
+                            document.getElementById('cords').innerHTML += `</br></br>orientation: ${pill.orientation}</br>pill_nr: ${pill.pill_nr}</br>`
+                            document.getElementById('cords').innerHTML += `first: {</br>`
+                            for (let [key, value] of Object.entries(pill.first)) {
+                                document.getElementById('cords').innerHTML += `${key}: ${value},</br>`
+                            }
+                            document.getElementById('cords').innerHTML += `}</br>second: {</br>`
+                            for (let [key, value] of Object.entries(pill.second)) {
+                                document.getElementById('cords').innerHTML += `${key}: ${value},</br>`
+                            }
+                            document.getElementById('cords').innerHTML += `}</br>old_first: {</br>`
+                            for (let [key, value] of Object.entries(pill.old_first)) {
+                                document.getElementById('cords').innerHTML += `${key}: ${value},</br>`
+                            }
+                            document.getElementById('cords').innerHTML += `}</br>old_second: {</br>`
+                            for (let [key, value] of Object.entries(pill.old_second)) {
+                                document.getElementById('cords').innerHTML += `${key}: ${value},</br>`
+                            }
+                            document.getElementById('cords').innerHTML += `}</br>`
+                        }.bind(this))
+
+                        if (kolumna == 0 || kolumna == 9 || linia == 0 || linia == 17) {
+                            td.className = 'ghost'
+                            data_cell.state = 'taken'
+                            // if (linia == 0) {
+                            //     data_cell.state = 'free'
+                            // }
+                        }
+
+                        if (this.viruses.places[data_cell.id] != undefined) { // sprawdza, czy dany td (data_cell) został wcześniej wylosowany i zarezerowany na virusa i jeśli tak (dane miejsce w obiekcie istnieje czyli jest różne od undefined) to podmienia dane tego td (data_cell) na virusa i daje mu odpowiedni obrazek
+                            data_cell.color = this.viruses.places[data_cell.id].color
+                            data_cell.img = `url(assets/viruses_butelka/${data_cell.color.split('*')[1]}/${data_cell.color.split('*')[1]}_vir.gif)`
+                            data_cell.html_element.style['background-image'] = data_cell.img
+                            data_cell.state = 'virus'
+
+                        }
+
+                        tr.append(td)
+                        // }
+                        playboard_data_row.push(data_cell)
+                    }
+                    // if (linia != 0 && linia != 17) {
+                    this.playboard_table.append(tr)
+                    // }
+                    this.playboard_data.push(playboard_data_row)
+                }
+                ifLog(this.playboard_data)
+
+                //tu będą zapisywane współrzędne które td-ki mają zostać zaktualizowane na podstawie dnowych danych w tabeli
+                this.changes_data = {
+                    taken: [],
+                    temp_taken: [],
+                    free: []
+                }
+            }
+
+            updateScore() {
+                let score = this.score.toString()
+                while (score.length < 7) {
+                    score = '0' + score
+                }
+
+                for (let nr = 1; nr <= 7; nr++) {
+                    document.getElementById(`score_${nr}`).style['background-image'] = `url("assets/cyfry/${score[nr - 1]}.png")`
+                }
+            }
+
+            updateTop() {
+                let top = this.top.toString()
+                if (this.score > this.top) {
+                    this.top = this.score
+                    top = this.top.toString()
+                    localStorage.setItem('top', this.top);
+
+                }
+                while (top.length < 7) {
+                    top = '0' + top
+                }
+                if (this.game_lost == true || this.game_won == true || this.game_started == false) { // aktualizuje html tylko na rozpoczęciu gry (zanim rozpocznie się gra jest game_started = false) albo na koniec gry
+                    for (let nr = 1; nr <= 7; nr++) {
+                        document.getElementById(`top_${nr}`).style['background-image'] = `url("assets/cyfry/${top[nr - 1]}.png")`
+                    }
+                }
+
+
+            }
+
+            updateVirus() {
+                let virus = this.viruses.left.toString()
+                while (virus.length < 2) {
+                    virus = '0' + virus
+                }
+
+                for (let nr = 1; nr <= 2; nr++) {
+                    document.getElementById(`virus_${nr}`).style['background-image'] = `url("assets/cyfry/${virus[nr - 1]}.png")`
+                }
+            }
+
+            updateHtmlCell() {
+                ifLog('Updating html cells:')
+                ifLog('free:')
+                for (let element of this.changes_data.free) { //ustawia html i dane w tabeli na domyślne (resetuje)
+                    try { // jeśli poprzednik nie jest ustawiony (bo element jest na górze planszy, to try jest potrzebny, żeby nie zacięło się dalej na undefined-ach)
+                        this.playboard_data[element.line][element.column].text = ''
+                        this.playboard_data[element.line][element.column].html_element.innerText = ''
+                        this.playboard_data[element.line][element.column].first = undefined
+                        this.playboard_data[element.line][element.column].second = undefined
+                        this.playboard_data[element.line][element.column].depends_on = undefined
+                        this.playboard_data[element.line][element.column].state = 'free'
+                        this.playboard_data[element.line][element.column].color = undefined
+                        this.playboard_data[element.line][element.column].img = undefined
+                        this.playboard_data[element.line][element.column].html_element.style['background-image'] = ''
+                        ifLog(this.playboard_data[element.line][element.column])
+                    } catch { }
+                }
+
+                this.changes_data.free = []
+                ifLog('temp_taken:')
+                for (let element of this.changes_data.temp_taken) { //ustawia sam html na podstawie danych w tabeli (dane w tabeli muszą być wcześniej już ustawione)
+                    this.playboard_data[element.line][element.column].html_element.style['background-image'] = this.playboard_data[element.line][element.column].img
+                    this.playboard_data[element.line][element.column].html_element.innerText = this.playboard_data[element.line][element.column].text
+                    ifLog(this.playboard_data[element.line][element.column])
+                }
+                this.changes_data.temp_taken = []
+
+
+                ifLog('taken:')
+                for (let element of this.changes_data.taken) { //ustawia sam html na podstawie danych w tabeli (dane w tabeli muszą być wcześniej już ustawione)
+                    this.playboard_data[element.line][element.column].html_element.style['background-image'] = this.playboard_data[element.line][element.column].img
+                    this.playboard_data[element.line][element.column].html_element.innerText = this.playboard_data[element.line][element.column].text
+                    ifLog(this.playboard_data[element.line][element.column])
+                }
+                this.changes_data.taken = []
+
+            }
+
+            checkIfCellIsFree(x, y) {
+                if (this.playboard_data[y][x].state == 'free') {
+                    return true
+                } else {
+                    return false
+                }
+
+            }
+
+            canRemovePills() {
+                ifLog('Playboard.canRemovePills()')
+                // let breaker = false
+                let counter = []
+
+                ifLog('Checking line by line:')
+                for (let line = 16; line >= 1; line--) {
+                    for (let column = 1; column <= 8; column++) {
+                        if (counter.length == 0) {
+                            if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                counter.push(this.playboard_data[line][column].color)
+
+                            }
+                        } else {
+                            if (counter[counter.length - 1] == this.playboard_data[line][column].color) {
+                                if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                    counter.push(this.playboard_data[line][column].color)
+                                    if (counter.length == 4) {
+                                        // breaker = true
+                                        ifLog('- true')
+                                        return true
+                                    }
+                                }
+                            } else {
+                                counter = []
+                                if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                    counter.push(this.playboard_data[line][column].color)
+                                }
+                            }
+                        }
+                    }
+                    counter = []
+                }
+                ifLog('- false')
+
+
+                ifLog('Checking column by column:')
+                counter = []
+                for (let column = 1; column <= 8; column++) {
+                    for (let line = 16; line >= 1; line--) {
+                        if (counter.length == 0) {
+                            if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                counter.push(this.playboard_data[line][column].color)
+                            }
+                        } else {
+                            if (counter[counter.length - 1] == this.playboard_data[line][column].color) {
+                                if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                    counter.push(this.playboard_data[line][column].color)
+                                    if (counter.length == 4) {
+                                        // breaker = true
+                                        ifLog('- true')
+                                        return true
+                                    }
+                                }
+                            } else {
+                                counter = []
+                                if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                    counter.push(this.playboard_data[line][column].color)
+                                }
+                            }
+                        }
+                    }
+                    counter = []
+                }
+                ifLog('- false')
+
+                return false
+
+            }
+
+            removePills() {
+                return new Promise((resolve_top, reject_top) => {
+
+                    let asyncRemovePills = async (resolve_top) => {
+                        ifLog('Przed czekaniem')
+                        ifLog('Playboard.removePills()')
+                        let counter = []
+                        let to_remove = []
+                        ifLog('--------------------------')
+                        ifLog('Checking line by line:')
+                        for (let line = 16; line >= 1; line--) {
+                            ifLog('NOWA LISTA:')
+                            for (let column = 1; column <= 8; column++) {
+                                ifLog(`linia: ${line}, kolumna: ${column}`)
+                                ifLog(counter)
+                                ifLog(JSON.stringify(counter))
+                                if (counter.length == 0) {
+                                    if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                        counter.push({ column: this.playboard_data[line][column].column, line: this.playboard_data[line][column].line })
+                                    }
+                                } else {
+                                    if (this.playboard_data[line][column - 1].color == this.playboard_data[line][column].color) {
+                                        if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                            counter.push({ column: this.playboard_data[line][column].column, line: this.playboard_data[line][column].line })
+                                        }
+                                    } else {
+                                        if (counter.length >= 4) {
+                                            for (let element of counter) {
+                                                if (to_remove.some(item => (item.line == element.line && item.column == element.column)) == false) {
+                                                    to_remove.push(element)
+                                                }
+                                            }
+                                        }
+                                        counter = []
+                                        if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                            counter.push({ column: this.playboard_data[line][column].column, line: this.playboard_data[line][column].line })
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (counter.length >= 4) {
+                                for (let element of counter) {
+                                    if (to_remove.some(item => (item.line == element.line && item.column == element.column)) == false) {
+                                        to_remove.push(element)
+                                    }
+                                }
+                            }
+                            counter = []
+                        }
+
+
+                        ifLog('||||||||||||||||||||||||||')
+                        ifLog('Checking column by column:')
+                        counter = []
+                        for (let column = 1; column <= 8; column++) {
+                            ifLog('NOWA LISTA:')
+                            for (let line = 16; line >= 1; line--) {
+                                ifLog(`linia: ${line}, kolumna: ${column}`)
+                                ifLog(counter)
+                                ifLog(JSON.stringify(counter))
+                                if (counter.length == 0) {
+                                    if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                        counter.push({ column: this.playboard_data[line][column].column, line: this.playboard_data[line][column].line })
+                                    }
+                                } else {
+                                    if (this.playboard_data[line + 1][column].color == this.playboard_data[line][column].color) {
+                                        if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                            counter.push({ column: this.playboard_data[line][column].column, line: this.playboard_data[line][column].line })
+                                        }
+                                    } else {
+                                        if (counter.length >= 4) {
+                                            for (let element of counter) {
+                                                if (to_remove.some(item => (item.line == element.line && item.column == element.column)) == false) {
+                                                    to_remove.push(element)
+                                                }
+                                            }
+                                        }
+                                        counter = []
+                                        if (this.playboard_data[line][column].state == 'taken' || this.playboard_data[line][column].state == 'virus') {
+                                            counter.push({ column: this.playboard_data[line][column].column, line: this.playboard_data[line][column].line })
+                                        }
+                                    }
+                                }
+                            }
+                            if (counter.length >= 4) {
+                                for (let element of counter) {
+                                    if (to_remove.some(item => (item.line == element.line && item.column == element.column)) == false) {
+                                        to_remove.push(element)
+                                    }
+                                }
+                            }
+                        }
+
+                        // tu dodaje boom
+
+                        ifLog('ZNALEZIONE DO ZBICIA')
+                        ifLog(to_remove)
+
+                        ifLog('ZBIJANIE_BOOM')
+                        for (let element of to_remove) {
+                            ifLog(element)
+                            ifLog(JSON.stringify(this.playboard_data[element.line][element.column], null, 5))
+                            if (this.playboard_data[element.line][element.column].state == 'virus') {
+                                this.playboard_data[element.line][element.column].img = `url("assets/viruses_butelka/${this.playboard_data[element.line][element.column].color.split('*')[1]}/${this.playboard_data[element.line][element.column].color.split('*')[1]}_vir_boom.png")`
+                                this.playboard_data[element.line][element.column].html_element.style['background-image'] = this.playboard_data[element.line][element.column].img
+
+                                this.viruses.left-- // zmniejsza liczbe virusów na planszy do zbicia widoczna w notesie pod marianem
+                                this.score += 100
+                                this.updateVirus()
+                                this.updateScore()
+
+
+
+
+
+                            } else if (this.playboard_data[element.line][element.column].state == 'taken') {
+
+                                this.playboard_data[element.line][element.column].img = `url("assets/pills/${this.playboard_data[element.line][element.column].color.split('*')[1]}/${this.playboard_data[element.line][element.column].color.split('*')[1]}_boom.png")`
+                                this.playboard_data[element.line][element.column].html_element.style['background-image'] = this.playboard_data[element.line][element.column].img
+
+
+                                if (this.playboard_data[element.line][element.column].depends_on != undefined) {
+                                    let sibling_element = this.playboard_data[this.playboard_data[element.line][element.column].depends_on.line][this.playboard_data[element.line][element.column].depends_on.column]
+                                    ifLog(JSON.stringify(sibling_element, null, 5))
+
+                                    sibling_element.depends_on = undefined
+                                    sibling_element.first = undefined
+                                    sibling_element.second = undefined
+                                    sibling_element.img = `url("assets/pills/${sibling_element.color.split('*')[1]}/${sibling_element.color.split('*')[1]}_dot.png")`
+                                    sibling_element.html_element.style['background-image'] = sibling_element.img
+                                }
+
+
+
+                                this.playboard_data[element.line][element.column].depends_on = undefined
+                            }
+                        }
+
+
+                        await new Promise((resolve, reject) => {
+                            ifLog('przed settimeout w metodzie klasy')
+                            setTimeout(() => {
+                                ifLog('w settimeout w metodzie klasy')
+
+                                // tu usuwam całkiem elementy
+                                ifLog('ZNALEZIONE DO ZBICIA')
+                                ifLog(to_remove)
+
+                                ifLog('ZBIJANIE')
+                                for (let element of to_remove) {
+                                    ifLog(element)
+                                    this.playboard_data[element.line][element.column].first = undefined
+                                    this.playboard_data[element.line][element.column].second = undefined
+                                    this.playboard_data[element.line][element.column].text = ''
+                                    this.playboard_data[element.line][element.column].html_element.innerText = ''
+                                    this.playboard_data[element.line][element.column].state = 'free'
+                                    this.playboard_data[element.line][element.column].color = undefined
+                                    this.playboard_data[element.line][element.column].img = undefined
+                                    this.playboard_data[element.line][element.column].html_element.style['background-image'] = ''
+
+
+                                }
+                                if (this.viruses.left > 0) { // gdy jest jeszcze jakiś virus na planszy
+
+                                } else { // gdy wszystkie virusy zostały zbite
+                                    this.game_won = true
+
+                                    // tu kod odpowiedzialny za zakończenie gry z game won
+
+                                    // wyczyść planszę od spodu 
+
+                                    // dodaj obrazek game won  i  miagjący start na końcu
+
+
+                                }
+                                resolve(true)
+                            }, 200)
+                            ifLog('po settimeout w metodzie klasy') // to sie wykona zaraz po "przed settimeout w metodzie klasy"
+                        })
+                        resolve_top(true)
+                        ifLog('Po czekaniu')
+                    }
+                    asyncRemovePills(resolve_top)
+                })
+
+
+            }
+
+            canCollapsePills() {
+                ifLog('Playboard.canCollapsePills()')
+
+                let skip = false
+
+
+                for (let line = 15; line >= 1; line--) {
+                    for (let column = 1; column <= 8; column++) {
+                        if (skip == false) {
+                            ifLog(`${column} ${line}`)
+                            if (this.playboard_data[line][column].state == 'taken') {
+                                if (this.playboard_data[line][column].depends_on != undefined && this.playboard_data[line][column].depends_on.side == 'right') { //gdy pastylka jest złożona z dwóch i ma brata po prawej
+                                    if ((this.checkIfCellIsFree(column, line + 1) && this.checkIfCellIsFree(column + 1, line + 1)) == true) {
+                                        ifLog('Dwie pod spodem wolne')
+                                        return true
+                                    }
+                                    skip = true  // zapewnia, że przeskoczymy o 2 miejsca do przodu i dzięki temu nie ma możliwości, że natrafimy na pastylkę, która ma depends_on = left
+                                } else {//gdy pastylka jest pojedyncza lub złożona z dwóch i ma brata nad sobą
+                                    if ((this.checkIfCellIsFree(column, line + 1) == true)) {
+                                        ifLog('Jedna pod spodem wolna')
+                                        return true
+                                    }
+                                }
+                            }
+                        } else {
+                            skip = false
+                        }
+                    }
+                }
+                return false
+            }
+
+            collapsePills() {
+                ifLog('Playboard.collapsePills()')
+                let skip = false
+
+
+                for (let line = 15; line >= 1; line--) {
+                    for (let column = 1; column <= 8; column++) {
+                        ifLog(`${column} ${line}`)
+                        if (skip == false) {
+                            if (this.playboard_data[line][column].state == 'taken') {
+                                if ((this.playboard_data[line][column].depends_on != undefined && this.playboard_data[line][column].depends_on.side == 'right') == true) { //gdy pastylka jest złożona z dwóch i ma brata po prawej
+                                    if ((this.checkIfCellIsFree(column, line + 1) && this.checkIfCellIsFree(column + 1, line + 1)) == true) {
+                                        ifLog('Przesuwanie pastylki horyzontalnej z depends_on = right')
+                                        //przesuwa rzeczy z góry w dół w tablicy
+                                        //first
+
+                                        this.playboard_data[line + 1][column].first = true
+                                        this.playboard_data[line + 1][column].second = false
+                                        this.playboard_data[line + 1][column].depends_on = {
+                                            side: 'right',
+                                            column: column + 1,
+                                            line: line + 1,
+                                        }
+                                        this.playboard_data[line + 1][column].text = this.playboard_data[line][column].text
+                                        this.playboard_data[line + 1][column].color = this.playboard_data[line][column].color
+                                        this.playboard_data[line + 1][column].img = this.playboard_data[line][column].img
+                                        this.playboard_data[line + 1][column].state = 'taken'
+
+
+                                        //second
+                                        ifLog('Przesuwanie pastylki rodzeństwa do  pastylki horyzontalnej z depends_on = right')
+                                        this.playboard_data[line + 1][column + 1].first = false
+                                        this.playboard_data[line + 1][column + 1].second = true
+                                        this.playboard_data[line + 1][column + 1].depends_on = {
+                                            side: 'left',
+                                            column: column,
+                                            line: line + 1,
+                                        }
+                                        this.playboard_data[line + 1][column + 1].text = this.playboard_data[line][column + 1].text
+                                        this.playboard_data[line + 1][column + 1].color = this.playboard_data[line][column + 1].color
+                                        this.playboard_data[line + 1][column + 1].img = this.playboard_data[line][column + 1].img
+                                        this.playboard_data[line + 1][column + 1].state = 'taken'
+
+                                        //dodaje elementy do wyczyszczenia 
+                                        this.changes_data.free.push({ line: line, column: column }, { line: line, column: column + 1 })
+
+                                        //dodaje elementy do aktualizacji na taken w html-u
+                                        this.changes_data.taken.push({ line: line + 1, column: column }, { line: line + 1, column: column + 1 })
+
+                                    }
+
+                                    skip = true // ta zmienna sprawia, że z następnej iteracji od razu na jej początku przeskoczymy do kolejnej (drugiej z kolei) - zamiast wbudowanego continue, które przeskakuje tylko do kolejnej iteracji
+
+                                } else if ((this.playboard_data[line][column].depends_on != undefined && this.playboard_data[line][column].depends_on.side == 'top') == true) {
+                                    if (this.checkIfCellIsFree(column, line + 1) == true) {
+                                        //przesuwa rzeczy z góry w dół w tablicy
+                                        //second
+                                        ifLog('Przesuwanie pastylki vertykalnej z depends_on = top')
+                                        this.playboard_data[line + 1][column].first = false
+                                        this.playboard_data[line + 1][column].second = true
+                                        this.playboard_data[line + 1][column].depends_on = {
+                                            side: 'top',
+                                            column: column,
+                                            line: line,
+                                        }
+                                        this.playboard_data[line + 1][column].text = this.playboard_data[line][column].text
+                                        this.playboard_data[line + 1][column].color = this.playboard_data[line][column].color
+                                        this.playboard_data[line + 1][column].img = this.playboard_data[line][column].img
+                                        this.playboard_data[line + 1][column].state = 'taken'
+
+                                        //first
+                                        ifLog('Przesuwanie rodzeństwa do pastylki vertykalnej z depends_on = top')
+                                        this.playboard_data[line][column].first = true
+                                        this.playboard_data[line][column].second = false
+                                        this.playboard_data[line][column].depends_on = {
+                                            side: 'bottom',
+                                            column: column,
+                                            line: line + 1,
+                                        }
+                                        this.playboard_data[line][column].text = this.playboard_data[line - 1][column].text
+                                        this.playboard_data[line][column].color = this.playboard_data[line - 1][column].color
+                                        this.playboard_data[line][column].img = this.playboard_data[line - 1][column].img
+                                        this.playboard_data[line][column].state = 'taken'
+
+                                        //dodaje elementy do wyczyszczenia 
+                                        this.changes_data.free.push({ line: line - 1, column: column })
+
+                                        //dodaje elementy do aktualizacji na taken w html-u
+                                        this.changes_data.taken.push({ line: line, column: column }, { line: line + 1, column: column })
+
+
+                                    }
+                                } else {//gdy pastylka jest pojedyncza, albo ma depends_on bottom
+                                    if ((this.checkIfCellIsFree(column, line + 1) == true)) {
+                                        //przesuwa rzeczy z góry w dół w tablicy
+
+                                        //dot
+                                        ifLog('Przesuwanie pastylki vertykalnej z depends_on = bottom lub pastylki z depends_on = undefined')
+                                        this.playboard_data[line + 1][column].first = undefined
+                                        this.playboard_data[line + 1][column].second = undefined
+                                        this.playboard_data[line + 1][column].depends_on = undefined
+                                        this.playboard_data[line + 1][column].text = this.playboard_data[line][column].text
+                                        this.playboard_data[line + 1][column].color = this.playboard_data[line][column].color
+                                        this.playboard_data[line + 1][column].img = this.playboard_data[line][column].img
+                                        this.playboard_data[line + 1][column].state = 'taken'
+
+                                        //dodaje elementy do wyczyszczenia 
+                                        this.changes_data.free.push({ line: line, column: column })
+
+                                        //dodaje elementy do aktualizacji na taken w html-u
+                                        this.changes_data.taken.push({ line: line + 1, column: column })
+                                    }
+                                }
+                            }
+                        } else {
+                            skip = false
+                        }
+                    }
+                }
+            }
+
+            endGame(type) { // 'won', 'lost'
+                if (type == 'won') {
+                    this.game_won = true
+                    this.end_element.style.display = 'block'
+                    this.won_element.style.display = 'block'
+                } else if (type == 'lost') {
+                    this.game_lost = true
+                    pill.throw_pill_first.style.display = 'none'
+                    pill.throw_pill_second.style.display = 'none'
+                    pill.mario.style['background-image'] = 'url("assets/mario/mario_end.png")'
+                    this.end_element.style.display = 'block'
+                    this.lost_element.style.display = 'block'
+                }
+            }
+
+        }
+
+        class Pill {
+            constructor(playboard) {
+                this.playboard = playboard
+                this.possible_colors = ['#FFE638/*yellow*/', '#14A2D0/*blue*/', '#E22E49/*red*/'] //yellow, blue, red
+                this.orientation = 'horizontal' //horizontal, vertical
+                this.pill_nr = 0
+
+                this.available_mario_states_normal = ['v1', 'v2', 'v3'] // pozycja ręki: góra, środek, dół
+                this.current_mario_state_normal = 0
+
+                this.mario = document.getElementById('mario')
+                this.throw_pill_first = document.getElementById('throw_pill_first')
+                this.throw_pill_second = document.getElementById('throw_pill_second')
+
+                this.available_pill_throw_states = [
+                    {
+                        img: "m1.png",
+                        mario_state: 'v1',
+                        orientation: 'horizontal',
+                        flip: false,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 194,
+                            left: 604,
+                        },
+                        second: {
+                            top: 194,
+                            left: 630,
+                        }
+                    },
+                    {
+                        img: "m2.png",
+                        mario_state: 'v2',
+                        orientation: 'vertical',
+                        flip: false,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 170,
+                            left: 617,
+                        },
+                        second: {
+                            top: 192,
+                            left: 617,
+                        }
+                    },
+                    {
+                        img: "m3.png",
+                        mario_state: 'v2',
+                        orientation: 'vertical',
+                        flip: false,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 142,
+                            left: 611,
+                        },
+                        second: {
+                            top: 164,
+                            left: 611,
+                        }
+                    },
+                    {
+                        img: "m4.png",
+                        mario_state: 'v2',
+                        orientation: 'horizontal',
+                        flip: true,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 131,
+                            left: 585,
+                        },
+                        second: {
+                            top: 131,
+                            left: 611,
+                        }
+                    },
+                    {
+                        img: "m5.png",
+                        mario_state: 'v2',
+                        orientation: 'horizontal',
+                        flip: true,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 112,
+                            left: 572,
+                        },
+                        second: {
+                            top: 112,
+                            left: 598,
+                        }
+                    },
+                    {
+                        img: "m6.png",
+                        mario_state: 'v3',
+                        orientation: 'horizontal',
+                        flip: true,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 95,
+                            left: 559,
+                        },
+                        second: {
+                            top: 95,
+                            left: 585,
+                        }
+                    },
+                    {
+                        img: "m7.png",
+                        mario_state: 'v3',
+                        orientation: 'vertical',
+                        flip: true,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 75,
+                            left: 560,
+                        },
+                        second: {
+                            top: 98,
+                            left: 560,
+                        }
+                    },
+                    {
+                        img: "m8.png",
+                        mario_state: 'v3',
+                        orientation: 'vertical',
+                        flip: true,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 67,
+                            left: 548,
+                        },
+                        second: {
+                            top: 89,
+                            left: 548,
+                        }
+                    },
+                    {
+                        img: "m9.png",
+                        mario_state: 'v3',
+                        orientation: 'horizontal',
+                        flip: false,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 73,
+                            left: 521,
+                        },
+                        second: {
+                            top: 73,
+                            left: 547,
+                        }
+                    },
+                    {
+                        img: "m10.png",
+                        mario_state: 'v3',
+                        orientation: 'horizontal',
+                        flip: false,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 70,
+                            left: 508,
+                        },
+                        second: {
+                            top: 70,
+                            left: 534,
+                        }
+                    },
+                    {
+                        img: "m11.png",
+                        mario_state: 'v3',
+                        orientation: 'vertical',
+                        flip: false,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 58,
+                            left: 515,
+                        },
+                        second: {
+                            top: 81,
+                            left: 515,
+                        }
+                    },
+                    {
+                        img: "m12.png",
+                        mario_state: 'v3',
+                        orientation: 'vertical',
+                        flip: false,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 64,
+                            left: 497,
+                        },
+                        second: {
+                            top: 87,
+                            left: 497,
+                        }
+                    },
+                    {
+                        img: "m13.png",
+                        mario_state: 'v3',
+                        orientation: 'horizontal',
+                        flip: true,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 82,
+                            left: 470,
+                        },
+                        second: {
+                            top: 82,
+                            left: 496,
+                        }
+                    },
+                    {
+                        img: "m14.png",
+                        mario_state: 'v3',
+                        orientation: 'horizontal',
+                        flip: true,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 90,
+                            left: 458,
+                        },
+                        second: {
+                            top: 90,
+                            left: 483,
+                        }
+                    },
+                    {
+                        img: "m15.png",
+                        mario_state: 'v3',
+                        orientation: 'vertical',
+                        flip: true,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 89,
+                            left: 458,
+                        },
+                        second: {
+                            top: 112,
+                            left: 458,
+                        }
+                    },
+                    {
+                        img: "m16.png",
+                        mario_state: 'v3',
+                        orientation: 'vertical',
+                        flip: true,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 103,
+                            left: 445,
+                        },
+                        second: {
+                            top: 125,
+                            left: 445,
+                        }
+                    },
+                    {
+                        img: "m17.png",
+                        mario_state: 'v3',
+                        orientation: 'horizontal',
+                        flip: false,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 129,
+                            left: 419,
+                        },
+                        second: {
+                            top: 129,
+                            left: 445,
+                        }
+                    },
+                    {
+                        img: "m18.png",
+                        mario_state: 'v3',
+                        orientation: 'horizontal',
+                        flip: false,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 148,
+                            left: 407,
+                        },
+                        second: {
+                            top: 148,
+                            left: 433,
+                        }
+                    },
+                    {
+                        img: "m19.png",
+                        mario_state: 'v3',
+                        orientation: 'vertical',
+                        flip: false,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 159,
+                            left: 407,
+                        },
+                        second: {
+                            top: 181,
+                            left: 407,
+                        }
+                    },
+                    {
+                        img: "m20.png",
+                        mario_state: 'v3',
+                        orientation: 'vertical',
+                        flip: false,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 178,
+                            left: 401,
+                        },
+                        second: {
+                            top: 201,
+                            left: 401,
+                        }
+                    },
+                    {
+                        img: "m21.png",
+                        mario_state: 'v3',
+                        orientation: 'horizontal',
+                        flip: true,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 209,
+                            left: 381,
+                        },
+                        second: {
+                            top: 209,
+                            left: 407,
+                        }
+                    },
+                    {
+                        img: "m22.png",
+                        mario_state: 'v1', // tu mario podnosi ręke do góry
+                        orientation: 'vertical',
+                        flip: true,
+                        width: 22,
+                        height: 20,
+                        first: {
+                            top: 212,
+                            left: 394,
+                        },
+                        second: {
+                            top: 235,
+                            left: 394,
+                        }
+                    },
+                    {
+                        img: "m23.png",
+                        mario_state: 'v1',
+                        orientation: 'horizontal', // to jest puste tak na prawde i wtedy mario podnosi nową tabletkę  (czyli pozycja startowa tabletki, tylko teraz podstawiamy nowy kolor)
+                        flip: false,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 194,
+                            left: 604,
+                        },
+                        second: {
+                            top: 194,
+                            left: 630,
+                        }
+                    },
+                    {
+                        img: "m24.png",
+                        mario_state: 'v1',
+                        orientation: 'vertical', // tu już wkładamy prawdziwą tabletkę do butelki
+                        flip: true,
+                        width: 23,
+                        height: 19,
+                        first: {
+                            top: 194,
+                            left: 604,
+                        },
+                        second: {
+                            top: 194,
+                            left: 630,
+                        }
+                    },
+                ]
+
+
+                this.updatePillDataOld = function () {
+                    ifLog('updatePillDataOld')
+                    this.old_first.column = this.first.column
+                    this.old_first.line = this.first.line
+                    this.old_first.color = this.first.color
+                    this.old_first.img = this.first.img
+
+                    this.old_second.column = this.second.column
+                    this.old_second.line = this.second.line
+                    this.old_second.color = this.second.color
+                    this.old_second.img = this.second.img
+                    ifLog(this.old_first)
+                    ifLog(this.old_second)
+
+                }.bind(this)
+
+
+                this.updatePillDataCurrent = function () {
+                    ifLog('updatePillDataCurrent')
+                    this.first.column = this.next_first.column
+                    this.first.line = this.next_first.line
+                    this.first.color = this.next_first.color
+                    this.first.img = this.next_first.img
+
+                    this.second.column = this.next_second.column
+                    this.second.line = this.next_second.line
+                    this.second.color = this.next_second.color
+                    this.second.img = this.next_second.img
+                    ifLog(this.first)
+                    ifLog(this.second)
+
+                }.bind(this)
+
+            }
+
+            updatePillData(state) {
+                ifLog('Updating pill data:')
+                switch (state) {
+                    case 'free':
+                        ifLog('free:')
+                        this.updatePillDataOld()
+                        this.playboard.changes_data['free'].push({ column: this.old_first.column, line: this.old_first.line }, { column: this.old_second.column, line: this.old_second.line })
+                        ifLog(this.playboard.changes_data['free'])
+                        break
+                    case 'temp_taken':
+                        this.playboard.playboard_data[this.first.line][this.first.column].color = this.first.color
+                        this.playboard.playboard_data[this.first.line][this.first.column].img = this.first.img
+                        this.playboard.playboard_data[this.first.line][this.first.column].state = 'temp_taken'
+                        this.playboard.playboard_data[this.first.line][this.first.column].text = this.pill_nr
+                        this.playboard.playboard_data[this.first.line][this.first.column].first = true
+                        this.playboard.playboard_data[this.first.line][this.first.column].second = false
+                        this.playboard.playboard_data[this.first.line][this.first.column].depends_on = (this.orientation == 'horizontal') ? { side: 'right', column: this.second.column, line: this.second.line } : { side: 'bottom', column: this.second.column, line: this.second.line }
+                        this.playboard.playboard_data[this.second.line][this.second.column].color = this.second.color
+                        this.playboard.playboard_data[this.second.line][this.second.column].img = this.second.img
+                        this.playboard.playboard_data[this.second.line][this.second.column].state = 'temp_taken'
+                        this.playboard.playboard_data[this.second.line][this.second.column].text = this.pill_nr
+                        this.playboard.playboard_data[this.second.line][this.second.column].first = false
+                        this.playboard.playboard_data[this.second.line][this.second.column].second = true
+                        this.playboard.playboard_data[this.second.line][this.second.column].depends_on = (this.orientation == 'horizontal') ? { side: 'left', column: this.first.column, line: this.first.line } : { side: 'top', column: this.first.column, line: this.first.line }
+                        this.playboard.changes_data[state].push({ column: this.first.column, line: this.first.line }, { column: this.second.column, line: this.second.line })
+                        ifLog('temp_taken')
+                        ifLog(this.playboard.changes_data['temp_taken'])
+                        ifLog(this.playboard.playboard_data[this.first.line][this.first.column])
+                        ifLog(this.playboard.playboard_data[this.second.line][this.second.column])
+                        break
+                    case 'taken':
+                        this.playboard.playboard_data[this.first.line][this.first.column].state = 'taken'
+                        this.playboard.playboard_data[this.second.line][this.second.column].state = 'taken'
+                        ifLog('taken:')
+                        ifLog(this.playboard.playboard_data[this.first.line][this.first.column])
+                        ifLog(this.playboard.playboard_data[this.second.line][this.second.column])
+                    default:
+                        break
+                }
+            }
+
+            canBeRotated() {
+                ifLog(`Pill.canBeRotated()`)
+                ifLog(`orientacja :${this.orientation}`)
+                ifLog(`first:`)
+                ifLog(this.first)
+                ifLog(`second:`)
+                ifLog(this.second)
+                if (this.orientation == 'horizontal') {
+                    if (this.playboard.checkIfCellIsFree(this.first.column, this.first.line - 1) == true) {
+                        return true
+                    } else {
+                        return false
+                    }
+                } else if (this.orientation == 'vertical') {
+                    if (this.playboard.checkIfCellIsFree(this.second.column + 1, this.second.line) == true) {
+                        return [true, 'variant1']
+                    } else if (this.playboard.checkIfCellIsFree(this.second.column - 1, this.second.line) == true) {
+                        return [true, 'variant2']
+                    } else {
+                        return false
+                    }
+                }
+            }
+
+            rotateRight(variant) { // variant1, variant2
+                ifLog(`Pill.rotateRight()`)
+                ifLog(`orientacja :${this.orientation}`)
+                if (this.orientation == 'horizontal') {
+                    this.first.line--
+                    this.first.img = `url("assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_top.png")`
+
+                    this.second.column--
+                    this.second.img = `url("assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_bottom.png")`
+
+                    this.orientation = 'vertical'
+                } else if (this.orientation == 'vertical') {
+                    switch (variant) {
+                        case 'variant1':
+                            this.first.line = this.second.line
+                            this.first.column = this.second.column
+                            this.first.color = this.second.color
+                            this.first.img = `url("assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_left.png")`
+
+                            this.second.line = this.old_first.line + 1
+                            this.second.column = this.old_first.column + 1
+                            this.second.color = this.old_first.color
+                            this.second.img = `url("assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_right.png")`
+
+                            this.orientation = 'horizontal'
+                            break
+                        case 'variant2':
+                            this.first.line = this.second.line
+                            this.first.column = this.second.column - 1
+                            this.first.color = this.second.color
+                            this.first.img = `url("assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_left.png")`
+
+                            this.second.line = this.old_first.line + 1
+                            this.second.column = this.old_first.column
+                            this.second.color = this.old_first.color
+                            this.second.img = `url("assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_right.png")`
+
+                            this.orientation = 'horizontal'
+                            break
+                    }
+                }
+            }
+
+            rotateLeft(variant) { // variant1, variant2
+                ifLog(`Pill.rotateLeft()`)
+                ifLog(`orientacja :${this.orientation}`)
+                ifLog(this.old_first)
+                ifLog(this.old_second)
+                if (this.orientation == 'horizontal') {
+                    this.first.line--
+                    this.first.color = this.second.color
+                    this.first.img = `url("assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_top.png")`
+
+                    this.second.column--
+                    this.second.color = this.old_first.color
+                    this.second.img = `url("assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_bottom.png")`
+
+                    this.orientation = 'vertical'
+                } else if (this.orientation == 'vertical') {
+                    switch (variant) {
+                        case 'variant1':
+                            this.first.line++
+                            this.first.img = `url("assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_left.png")`
+
+                            this.second.column++
+                            this.second.img = `url("assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_right.png")`
+
+                            this.orientation = 'horizontal'
+                            break
+                        case 'variant2':
+                            this.first.line = this.second.line
+                            this.first.column = this.second.column - 1
+                            this.first.color = this.second.color
+                            this.first.img = `url("assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_left.png")`
+
+                            this.second.line = this.old_first.line + 1
+                            this.second.column = this.old_first.column
+                            this.second.color = this.old_first.color
+                            this.second.img = `url("assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_right.png")`
+
+                            this.orientation = 'horizontal'
+                            break
+                    }
+
+                }
+            }
+
+            canBeMovedRight() {
+                ifLog(`Pill.canBeMovedRight()`)
+                ifLog(`orientacja :${this.orientation}`)
+                switch (this.orientation) {
+                    case 'horizontal':
+                        if (this.playboard.checkIfCellIsFree(this.second.column + 1, this.second.line) == true) {
+                            return true
+                        } else {
+                            return false
+                        }
+                        break
+                    case 'vertical':
+                        if (this.playboard.checkIfCellIsFree(this.first.column + 1, this.first.line) == true && this.playboard.checkIfCellIsFree(this.second.column + 1, this.second.line) == true) {
+                            return true
+                        }
+                        else {
+                            return false
+                        }
+                        break
+                }
+
+            }
+
+            moveRight() {
+                ifLog(`Pill.moveRight() `)
+                ifLog(`orientacja :${this.orientation}`)
+                this.first.column = this.first.column + 1
+                this.second.column = this.second.column + 1
+            }
+
+            canBeMovedLeft() {
+                ifLog(`Pill.canBeMovedLeft()`)
+                ifLog(`orientacja :${this.orientation}`)
+                switch (this.orientation) {
+                    case 'horizontal':
+                        if (this.playboard.checkIfCellIsFree(this.first.column - 1, this.first.line) == true) {
+                            return true
+                        } else {
+                            return false
+                        }
+                        break
+                    case 'vertical':
+                        if (this.playboard.checkIfCellIsFree(this.first.column - 1, this.first.line) == true && this.playboard.checkIfCellIsFree(this.second.column - 1, this.second.line) == true) {
+                            return true
+                        }
+                        else {
+                            return false
+                        }
+                        break
+                }
+
+            }
+
+            moveLeft() {
+                ifLog(`Pill.moveLeft() `)
+                ifLog(`orientacja :${this.orientation}`)
+                this.first.column = this.first.column - 1
+                this.second.column = this.second.column - 1
+            }
+
+            canBeMovedDown() {
+                ifLog(`Pill.canBeMovedDown()`)
+                ifLog(`orientacja :${this.orientation}`)
+                switch (this.orientation) {
+                    case 'horizontal':
+                        if (this.playboard.checkIfCellIsFree(this.first.column, this.first.line + 1) == true && this.playboard.checkIfCellIsFree(this.second.column, this.second.line + 1) == true) {
+                            return true
+                        } else {
+                            return false
+                        }
+                        break
+                    case 'vertical':
+                        if (this.playboard.checkIfCellIsFree(this.second.column, this.second.line + 1) == true) {
+                            return true
+                        }
+                        else {
+                            return false
+                        }
+                        break
+                }
+
+            }
+
+            moveDown() {
+                ifLog(`Pill.moveDown() `)
+                ifLog(`orientacja :${this.orientation}`)
+                this.first.line = this.first.line + 1
+                this.second.line = this.second.line + 1
+            }
+
+            canSpawnNewPill() {
+                ifLog(`Pill.canSpawnNewPill()`)
+                ifLog(`orientacja :${this.orientation}`)
+                if (this.playboard.checkIfCellIsFree(4, 1) == true && this.playboard.checkIfCellIsFree(5, 1) == true) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+
+            spawnNewPill() {
+                return new Promise((resolve_top, reject_top) => {
+                    ifLog('Pill.spawnNewPill()')
+                    this.orientation = 'horizontal'
+
+                    this.old_first = {
+                        column: undefined,
+                        line: undefined,
+                        color: undefined,
+                        img: undefined,
+                    }
+
+                    this.old_second = {
+                        column: undefined,
+                        line: undefined,
+                        color: undefined,
+                        img: undefined,
+                    }
+                    if (this.next_first == undefined || this.next_second == undefined) {
+                        this.first = {
+                            column: 4,
+                            line: 1,
+                            color: this.possible_colors[randomInt(0, 2)],
+                            img: undefined,
+                        }
+                        this.first.img = `url("assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_left.png")`
+
+                        this.second = {
+                            column: 5,
+                            line: 1,
+                            color: this.possible_colors[randomInt(0, 2)],
+                            img: undefined,
+                        }
+                        this.second.img = `url("assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_right.png")`
+
+                        this.next_first = {
+                            column: 4,
+                            line: 1,
+                            color: this.possible_colors[randomInt(0, 2)],
+                            img: undefined,
+                        }
+                        this.next_first.img = `url("assets/pills/${this.next_first.color.split('*')[1]}/${this.next_first.color.split('*')[1]}_left.png")`
+
+                        this.next_second = {
+                            column: 5,
+                            line: 1,
+                            color: this.possible_colors[randomInt(0, 2)],
+                            img: undefined,
+                        }
+                        this.next_second.img = `url("assets/pills/${this.next_second.color.split('*')[1]}/${this.next_second.color.split('*')[1]}_right.png")`
+                    } else {
+
+                        this.updatePillDataCurrent()
+
+                        this.next_first = {
+                            column: 4,
+                            line: 1,
+                            color: this.possible_colors[randomInt(0, 2)],
+                            img: undefined,
+                        }
+                        this.next_first.img = `url("assets/pills/${this.next_first.color.split('*')[1]}/${this.next_first.color.split('*')[1]}_left.png")`
+
+                        this.next_second = {
+                            column: 5,
+                            line: 1,
+                            color: this.possible_colors[randomInt(0, 2)],
+                            img: undefined,
+                        }
+                        this.next_second.img = `url("assets/pills/${this.next_second.color.split('*')[1]}/${this.next_second.color.split('*')[1]}_right.png")`
+                    }
+
+
+
+                    let asyncThrowPill = async (resolve_top) => {
+                        for (let nr = 0; nr < 24; nr++) {
+                            if (nr < 22) {
+                                this.mario.style['background-image'] = `url("assets/mario/mario_${this.available_pill_throw_states[nr].mario_state}.png")`
+
+                                this.throw_pill_first.style.width, this.throw_pill_second.style.width = this.available_pill_throw_states[nr].width + 'px'
+                                this.throw_pill_first.style.height, this.throw_pill_second.style.height = this.available_pill_throw_states[nr].height + 'px'
+
+                                this.throw_pill_first.style.top = this.available_pill_throw_states[nr].first.top + 'px'
+                                this.throw_pill_first.style.left = this.available_pill_throw_states[nr].first.left + 'px'
+
+                                this.throw_pill_second.style.top = this.available_pill_throw_states[nr].second.top + 'px'
+                                this.throw_pill_second.style.left = this.available_pill_throw_states[nr].second.left + 'px'
+                                if (this.available_pill_throw_states[nr].orientation == 'horizontal') {
+
+                                    if (this.available_pill_throw_states[nr].flip == true) {
+                                        this.throw_pill_first.style['background-image'] = `url(assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_left.png)`
+                                        this.throw_pill_second.style['background-image'] = `url(assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_right.png)`
+                                    } else {
+                                        this.throw_pill_first.style['background-image'] = `url(assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_left.png)`
+                                        this.throw_pill_second.style['background-image'] = `url(assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_right.png)`
+                                    }
+
+                                } else if (this.available_pill_throw_states[nr].orientation == 'vertical') {
+                                    if (this.available_pill_throw_states[nr].flip == true) {
+                                        this.throw_pill_first.style['background-image'] = `url(assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_top.png)`
+                                        this.throw_pill_second.style['background-image'] = `url(assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_bottom.png)`
+                                    } else {
+                                        this.throw_pill_first.style['background-image'] = `url(assets/pills/${this.first.color.split('*')[1]}/${this.first.color.split('*')[1]}_top.png)`
+                                        this.throw_pill_second.style['background-image'] = `url(assets/pills/${this.second.color.split('*')[1]}/${this.second.color.split('*')[1]}_bottom.png)`
+                                    }
+                                }
+                            } else if (nr == 22) {// klatka 23 licząc od jeden / 22 licząc od zera
+                                this.throw_pill_first.style.width, this.throw_pill_second.style.width = this.available_pill_throw_states[nr].width + 'px'
+                                this.throw_pill_first.style.height, this.throw_pill_second.style.height = this.available_pill_throw_states[nr].height + 'px'
+
+                                this.throw_pill_first.style.top = this.available_pill_throw_states[nr].first.top + 'px'
+                                this.throw_pill_first.style.left = this.available_pill_throw_states[nr].first.left + 'px'
+
+                                this.throw_pill_second.style.top = this.available_pill_throw_states[nr].second.top + 'px'
+                                this.throw_pill_second.style.left = this.available_pill_throw_states[nr].second.left + 'px'
+
+                                this.throw_pill_first.style['background-image'] = `url(assets/pills/${this.next_first.color.split('*')[1]}/${this.next_first.color.split('*')[1]}_left.png)`
+                                this.throw_pill_second.style['background-image'] = `url(assets/pills/${this.next_second.color.split('*')[1]}/${this.next_second.color.split('*')[1]}_right.png)`
+
+
+                            } else if (nr = 23) { // klatka 24 licząc od jeden / 23 licząc od zera
+
+                            }
+                            await new Promise((resolve, reject) => {
+                                setTimeout(() => {
+                                    resolve(true)
+                                }, 20)
+                            })
+
+                        }
+
+                        resolve_top(true)
+
+                    }
+                    asyncThrowPill(resolve_top)
+                    this.pill_nr++
+                })
+            }
+
+        }
+
+        class MagnifyingGlass {
+            constructor() {
+                this.step = 5
+                this.ray_small = 52
+                this.ray_big = 97
+
+                this.available_stages_normal = ['v1', 'v2', 'v3', 'v2'] // prawo, środek, lewo, środek
+                this.current_stage_normal = 0 //to będzie index na podstawie którego będzie można wybrać jak mają wyglądać wirusy w danym momencie (obócone w lewo, środek albo prawo)
+
+                this.available_stages_end = ['v1', 'v2'] // otwarte buzie, zamknięte
+                this.curernt_stage_end = 0
+
+                this.viruses = {
+                    yellow: {
+                        html_element: document.getElementById('virus_yellow'),
+                        angle: 0,
+                        top: 45,
+                        left: 97,
+                    },
+                    red: {
+                        html_element: document.getElementById('virus_red'),
+                        angle: 240,
+                        top: 123,
+                        left: 52,
+                    },
+                    blue: {
+                        html_element: document.getElementById('virus_blue'),
+                        angle: 130,
+                        top: 130,
+                        left: 137,
+                    }
+                }
+
+                this.carousel = undefined // tu będzie setinterval od krecenia virusami
+                this.laugh = undefined // tu będzie setinterval ze śmiejącymi się wirusami
+            }
+
+            spinLeft() {
+                let sinOf = (angle) => {
+                    return Math.sin(convertToRadians(angle))
+                }
+                let cosOf = (angle) => {
+                    return Math.cos(convertToRadians(angle))
+                }
+                let convertToRadians = (angle) => {
+                    return angle * (Math.PI / 180);
+                }
+
+                if (this.carousel == undefined) {
+                    this.carousel = setInterval(() => {
+                        ifLog('----------------')
+                        for (let virus in this.viruses) {
+
+                            if (this.current_stage_normal == 1 || this.current_stage_normal == 3) { //gdy wraca do środka
+                                this.viruses[virus].angle -= this.step
+                                if (this.viruses[virus].angle <= 0) { //360 stopni to tyle samo co 0 stopni, więc żeby nie zwięskszać stopni ponad 360 to wracam do 0 (ułatwia w dłuższej perspektywie oblicznie i jest czytelniejsze w logach)
+                                    this.viruses[virus].angle = 360 + this.viruses[virus].angle
+                                }
+                            }
+
+                            ifLog(`color: ${virus} state: ${this.available_stages_normal[this.current_stage_normal]} angle: ${this.viruses[virus].angle}°  top: ${this.viruses[virus].top}  left: ${this.viruses[virus].left}`)
+
+                            let x = Math.round(this.ray_small * sinOf(this.viruses[virus].angle))
+                            let y = Math.round(this.ray_small * cosOf(this.viruses[virus].angle))
+                            this.viruses[virus].left = this.ray_big + x
+                            this.viruses[virus].top = this.ray_big - y
+
+
+                            this.viruses[virus].html_element.style.left = this.viruses[virus].left + 'px'
+                            this.viruses[virus].html_element.style.top = this.viruses[virus].top + 'px'
+                            this.viruses[virus].html_element.style['background-image'] = `url("assets/viruses_lupa/${virus}/normal/${virus}_${this.available_stages_normal[this.current_stage_normal]}.png")`
+
+
+                        }
+
+                        if (this.current_stage_normal < 3) {
+                            this.current_stage_normal += 1
+                        } else {
+                            this.current_stage_normal = 0
+                        }
+
+
+                    }, 200)
+
+                }
+            }
+
+            startTaunt() {
+                if (this.laugh == undefined) {
+                    this.laugh = setInterval(() => {
+                        for (let virus in this.viruses) {
+                            this.viruses[virus].html_element.style['background-image'] = `url("assets/viruses_lupa/${virus}/end/${virus}_end_${this.available_stages_end[this.curernt_stage_end]}.png")`
+                        }
+                        if (this.curernt_stage_end == 1) {
+                            this.curernt_stage_end = 0
+                        } else {
+                            this.curernt_stage_end = 1
+                        }
+
+
+                    }, 75)
+                }
+            }
+
+            stopSpin() {
+                clearInterval(this.carousel)
+                this.carousel = undefined
+            }
+        }
+
+
+
+
+
+        let playboard = new Playboard()
+        let pill = new Pill(playboard)
+        playboard.pill = pill
+        playboard.updateVirus()
+        playboard.updateTop()
+        let mg = new MagnifyingGlass()
+        mg.spinLeft()
+
+
+        async function init() {
+
+            await pill.spawnNewPill()
+
+            let key_pressed = { state: false, key: undefined }
+            let temp_lock = false
+            let multiclicks = {
+                arrowup: 0,
+                shift: 0,
+                arrowleft: 0,
+                arrowright: 0,
+                arrowdown: 0,
+            }
+            let can_be_moved = true
+            let user_fall = false
+
+            let moveOneStepDown = () => {
+                pill.updatePillData('free')
+                playboard.updateHtmlCell()
+                pill.moveDown()
+                pill.updatePillData('temp_taken')
+                playboard.updateHtmlCell()
+            }
+
+            let cantFallAnymore = () => {
+                return new Promise((resolve_top, reject_top) => {
+
+                    let asyncCantFall = async (resolve_top) => {
+                        ifLog('Can\'t fall any more - stopping falling.')
+                        pill.updatePillData('taken')
+                        let kolej = 1
+                        while (true) {
+                            ifLog(`ZBIJANIE - kolej ${kolej}`)
+                            if (playboard.canRemovePills() == true) {
+                                // tu logika za zbijanie
+                                await playboard.removePills() // sam odświeża html asynchronicznie więc nie potrzeba po nim playboard.updateHtmlCell()
+
+                                ifLog(`%cplayboard.game_won: ${playboard.game_won}`, 'font-size: 30px;')
+                                if (playboard.game_won == true) {
+                                    playboard.updateTop()
+                                    playboard.endGame('won')
+                                    ifLog('%cGAME WON', 'font-size: 30px;')
+                                }
+
+                                while (true) {
+                                    // tu logika za sprawdzanie czy może spaść
+                                    if (playboard.canCollapsePills() == true) {
+                                        //tu logika za spadanie
+                                        playboard.collapsePills() // collapsuje o jeden wiersz w dół
+                                        await new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                                resolve(true)
+                                            }, 100)
+                                        })
+                                        playboard.updateHtmlCell()
+                                    } else {
+                                        break
+                                    }
+                                }
+                                //rekursja
+                                kolej++
+                            } else {
+                                break
+                            }
+                        }
+                        if (pill.canSpawnNewPill() == true) {
+                            if (playboard.game_won == false) {
+                                await pill.spawnNewPill()
+                                pill.updatePillData('temp_taken')
+                                playboard.updateHtmlCell()
+                            }
+                        } else {
+                            //tu logika za koniec gry
+                            playboard.game_lost = true
+                            playboard.updateTop()
+                            mg.stopSpin()
+                            mg.startTaunt()
+                            playboard.endGame('lost')
+                            ifLog('%cGAME OVER', 'font-size: 30px;')
+                            // alert('GAME OVER')
+
+                        }
+
+                        resolve_top(true)
+                    }
+                    asyncCantFall(resolve_top)
+                })
+            }
+
+
+            pill.updatePillData('temp_taken')
+            playboard.updateHtmlCell()
+            playboard.game_started = true
+
+            let body = document.getElementsByTagName('body')[0]
+            body.addEventListener('keydown', async function (event) {
+                ifLog('*********Event**********')
+                ifLog(`Detected keydown: *${event.key}*`)
+                if (temp_lock == true) {
+                    return
+                }
+                temp_lock = true
+                ifLog(`key_pressed.state: ${key_pressed.state}`)
+                if (key_pressed.state == true) {
+                    temp_lock = false
+                    return
+                }
+                switch (event.key.toLowerCase()) {
+                    case 'arrowup': //rotate left
+                    case 'w':
+                        key_pressed = { state: true, key: 'arrowup' }
+                        temp_lock = false
+                        ifLog(`can_be_moved: ${can_be_moved}`)
+                        if (can_be_moved == true && playboard.game_lost == false && playboard.game_won == false && playboard.game_started == true) {
+                            can_be_moved = false
+                            multiclicks.arrowup++
+                            while (key_pressed.key == 'arrowup') {
+                                ifLog('%c⭯⭯', 'font-size:30px;')
+                                let pill_can_be_rotated_left = pill.canBeRotated()
+                                ifLog(`pill_can_be_rotated_left:${pill_can_be_rotated_left}`)
+                                if (pill_can_be_rotated_left == true) {
+                                    pill.updatePillData('free')
+                                    playboard.updateHtmlCell()
+                                    ifLog(`Can be rotated left:${pill.rotateLeft()}`)
+                                    pill.updatePillData('temp_taken')
+                                    playboard.updateHtmlCell()
+
+                                } else if (Array.isArray(pill_can_be_rotated_left) == true) {
+                                    pill.updatePillData('free')
+                                    playboard.updateHtmlCell()
+                                    ifLog(`Can be rotated left:${pill.rotateLeft(pill_can_be_rotated_left[1])}`)
+                                    pill.updatePillData('temp_taken')
+                                    playboard.updateHtmlCell()
+                                }
+                                await new Promise((resolve, reject) => {
+                                    let max = 20
+                                    let i = 0
+                                    let interval_arrowup = setInterval(() => {
+                                        if (key_pressed.key != 'arrowup' || i == max) {
+                                            clearInterval(interval_arrowup)
+                                            resolve(true)
+                                        } else {
+                                            i++
+                                        }
+                                    }, 10)
+                                })
+                            }
+                            can_be_moved = true
+                        }
+                        break
+
+                    case 'shift': //rotate right
+                        key_pressed = { state: true, key: 'shift' }
+                        temp_lock = false
+                        ifLog(`can_be_moved: ${can_be_moved}`)
+                        if (can_be_moved == true && playboard.game_lost == false && playboard.game_won == false && playboard.game_started == true) {
+                            can_be_moved = false
+                            multiclicks.shift++
+                            while (key_pressed.key == 'shift') {
+                                ifLog('%c⭮⭮', 'font-size:30px;')
+                                let pill_can_be_rotated_right = pill.canBeRotated()
+                                ifLog(`pill_can_be_rotated_right:${pill_can_be_rotated_right}`)
+                                if (pill_can_be_rotated_right == true) {
+                                    pill.updatePillData('free')
+                                    playboard.updateHtmlCell()
+                                    ifLog(`Can be rotated right:${pill.rotateRight()}`)
+                                    pill.updatePillData('temp_taken')
+                                    playboard.updateHtmlCell()
+
+                                } else if (Array.isArray(pill_can_be_rotated_right) == true) {
+                                    pill.updatePillData('free')
+                                    playboard.updateHtmlCell()
+                                    ifLog(`Can be rotated right:${pill.rotateRight(pill_can_be_rotated_right[1])}`)
+                                    pill.updatePillData('temp_taken')
+                                    playboard.updateHtmlCell()
+                                }
+                                await new Promise((resolve, reject) => {
+                                    let max = 20
+                                    let i = 0
+                                    let interval_shift = setInterval(() => {
+                                        if (key_pressed.key != 'shift' || i == max) {
+                                            clearInterval(interval_shift)
+                                            resolve(true)
+                                        } else {
+                                            i++
+                                        }
+                                    }, 10)
+                                })
+                            }
+                            can_be_moved = true
+                        }
+                        break
+
+                    case 'arrowleft': //move left
+                    case 'a':
+                        key_pressed = { state: true, key: 'arrowleft' }
+                        temp_lock = false
+                        ifLog(`can_be_moved:${can_be_moved}`)
+                        if (can_be_moved == true && playboard.game_lost == false && playboard.game_won == false && playboard.game_started == true) {
+                            can_be_moved = false
+                            multiclicks.arrowleft++
+                            while (key_pressed.key == 'arrowleft') {
+                                ifLog('🠈🠈🠈🠈🠈🠈🠈')
+                                let pill_can_be_moved_left = pill.canBeMovedLeft()
+                                ifLog(`pill_can_be_moved_left:${pill_can_be_moved_left}`)
+                                if (pill_can_be_moved_left == true) {
+                                    pill.updatePillData('free')
+                                    playboard.updateHtmlCell()
+                                    pill.moveLeft()
+                                    pill.updatePillData('temp_taken')
+                                    playboard.updateHtmlCell()
+                                }
+                                await new Promise((resolve, reject) => {
+                                    let max = 20
+                                    let i = 0
+                                    let interval_arrowleft = setInterval(() => {
+                                        if (key_pressed.key != 'arrowleft' || i == max) {
+                                            clearInterval(interval_arrowleft)
+                                            resolve(true)
+                                        } else {
+                                            i++
+                                        }
+                                    }, 10)
+                                })
+                            }
+                            can_be_moved = true
+                        }
+                        break
+
+                    case 'arrowright': // move right
+                    case 'd':
+                        key_pressed = { state: true, key: 'arrowright' }
+                        temp_lock = false
+                        ifLog(`can_be_moved:${can_be_moved}`)
+                        if (can_be_moved == true && playboard.game_lost == false && playboard.game_won == false && playboard.game_started == true) {
+                            can_be_moved = false
+                            multiclicks.arrowright++
+                            while (key_pressed.key == 'arrowright') {
+                                ifLog('🠊🠊🠊🠊🠊🠊🠊')
+                                if (pill.canBeMovedRight() == true) {
+                                    pill.updatePillData('free')
+                                    playboard.updateHtmlCell()
+                                    pill.moveRight()
+                                    pill.updatePillData('temp_taken')
+                                    playboard.updateHtmlCell()
+                                }
+                                await new Promise((resolve, reject) => {
+                                    let max = 20
+                                    let i = 0
+                                    let interval_arrowright = setInterval(() => {
+                                        if (key_pressed.key != 'arrowright' || i == max) {
+                                            clearInterval(interval_arrowright)
+                                            resolve(true)
+                                        } else {
+                                            i++
+                                        }
+                                    }, 10)
+                                })
+                            }
+                            can_be_moved = true
+                        }
+                        break
+
+                    case 'arrowdown': //move down
+                    case 's':
+                        key_pressed = { state: true, key: 'arrowdown' }
+                        user_fall = true
+                        temp_lock = false
+                        multiclicks.arrowdown++
+                        ifLog(`can_be_moved:${can_be_moved}`)
+                        if (can_be_moved == true && playboard.game_lost == false && playboard.game_won == false && playboard.game_started == true) {
+                            can_be_moved = false
+                            while (key_pressed.key == 'arrowdown') {
+                                ifLog('🠋🠋🠋🠋🠋🠋🠋')
+
+                                while (pill.canBeMovedDown() == true) {
+                                    moveOneStepDown()
+                                    await new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                            resolve(true)
+                                        }, 50)
+                                    })
+                                }
+                                await cantFallAnymore()
+                                await new Promise((resolve, reject) => {
+                                    let max = 20
+                                    let i = 0
+                                    let interval_arrowdown = setInterval(() => {
+                                        if (key_pressed.key != 'arrowdown' || i == max) {
+                                            clearInterval(interval_arrowdown)
+                                            resolve(true)
+                                        } else {
+                                            i++
+                                        }
+                                    }, 10)
+                                })
+
+                            }
+                            can_be_moved = true
+                        }
+                        user_fall = false
+                        break
+
+                    case ' ': //zatrzymanie mainloop
+                        temp_lock = false
+                        // halt_set_interval = !halt_set_interval
+                        // ifLog(`Halt setinterval mainloop: ${halt_set_interval}`)
+                        break
+
+                    default:
+                        temp_lock = false
+                        ifLog(`%%%%%%%%%%%%%%%% S E P A R A T O R %%%%%%%%%%%%%%%%`)
+                }
+            })
+
+            body.addEventListener('keyup', async function (event) {
+                ifLog('^^^^^^^^^^^^^Event^^^^^^^^^^^^^')
+                ifLog(`Detected keyup: *${event.key}*`)
+
+                switch (event.key.toLowerCase()) {
+                    case 'arrowup': //rotate left
+                    case 'w':
+                        if (key_pressed.key == 'arrowup') {
+                            key_pressed = { state: false, key: undefined }
+                        }
+                        break
+
+                    case 'shift': //rotate right
+                        if (key_pressed.key == 'shift') {
+                            key_pressed = { state: false, key: undefined }
+                        }
+                        break
+
+                    case 'arrowleft': //move left
+                    case 'a':
+                        if (key_pressed.key == 'arrowleft') {
+                            key_pressed = { state: false, key: undefined }
+                        }
+                        break
+
+                    case 'arrowright': // move right
+                    case 'd':
+                        if (key_pressed.key == 'arrowright') {
+                            key_pressed = { state: false, key: undefined }
+                        }
+                        break
+
+                    case 'arrowdown': //move down
+                    case 's':
+                        if (key_pressed.key == 'arrowdown') {
+
+                            key_pressed = { state: false, key: undefined }
+                        }
+                        break
+
+                    case ' ': //zatrzymanie mainloop
+                        // halt_set_interval = !halt_set_interval
+                        ifLog(`Halt setinterval mainloop: ${halt_set_interval}`)
+                        break
+
+                    default:
+                        ifLog(`%%%%%%%%%%%%%%%% S E P A R A T O R %%%%%%%%%%%%%%%%`)
+                }
+            })
+
+            let halt_set_interval = false
+
+            let mainLoop = setInterval(async () => {
+                if (user_fall == true) {
+                    return
+                }
+                if (halt_set_interval == true) {
+                    return
+                }
+                ifLog('----------------- M A I N L O O P -------------------')
+                key_pressed = { state: true, key: 'programatic_event' }
+                await new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        if (can_be_moved == true) {
+                            resolve(true)
+                        }
+                    }, 50)
+                })
+                if (pill.canBeMovedDown() == true) {
+                    moveOneStepDown()
+                } else {
+                    await cantFallAnymore()
+                }
+                key_pressed = { state: false, key: undefined }
+                ifLog('----------------- M A I N L O O P end -------------------')
+            }, 1000)
+
+        }
+        init()
+
+    </script>
+</body>
+
+</html>
