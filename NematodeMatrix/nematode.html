@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<head>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L8MNMS0TFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-L8MNMS0TFM');
+</script>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Nematode Matrix</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+    <canvas id='canvas'></canvas>
+    <div id='nodeHolder'></div>
+    <label id="toggleConnectome" class="switch">
+        <input id="connectomeCheckbox" type="checkbox" checked onclick="toggleConnectome()">
+        <span class="slider round"></span>
+    </label>
+    <div id="buttons">
+        <img id="centerButton" src="center.svg" height="40px" class="noselect">
+        <img id="clearButton" src="clear.svg" height="40px" class="noselect">
+    </div>
+    <script type="text/javascript" src="constants.js"></script>
+    <script type="text/javascript" src="connectome.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>
