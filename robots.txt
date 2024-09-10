@@ -2,7 +2,3 @@ User-Agent: *
 Disallow: /linus/
 Disallow: /img/
 Disallow: /Eaglecraft/
-
-
-
-Sitemap: https://seans-sites.pages.dev/wp-sitemap.xml
