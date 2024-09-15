@@ -106,7 +106,7 @@ nav {
   nav ul li ul {
     display: none;
     position: absolute;
-    background-image: url(img/EspressoSolidColor.jpg); /* set background image */
+    background-image: (img/EspressoSolidColor.jpg); /* set background image */
     padding: 4px;
     border-radius:  0px 0px 8px 8px;
   }
