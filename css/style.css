@@ -155,26 +155,4 @@ nav {
 
 
 
-#searchInput {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    width: 100%;
-    max-width: 400px;
-}
 
-#itemList {
-    list-style-type: none;
-    padding: 0;
-}
-
-#itemList li {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}
-
-#itemList li.hidden {
-    display: none;
-}
