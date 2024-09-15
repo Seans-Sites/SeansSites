@@ -170,11 +170,3 @@ nav {
     padding: 0;
 }
 
-#itemList li {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}
-
-#itemList li.hidden {
-    display: none;
-}
