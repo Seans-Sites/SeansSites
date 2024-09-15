@@ -40,10 +40,11 @@ body {
   cursor: pointer; /* Set cursor style */
 }
 
-/* Hover effect for buttons */
+/* Example of manually darkening */
 .button:hover {
-  background-color: darken(var(--secondary-color), 10%); /* Darken button color on hover */
+  background-color: #5a6268; /* Darkened manually */
 }
+
 
 /* Layout styles for the site container */
 .site-container {
@@ -106,7 +107,7 @@ nav {
   nav ul li ul {
     display: none;
     position: absolute;
-    background-image: (img/Espresso Solid Color.jpg); /* set background image */
+    background-image: url(img/Espresso Solid Color.jpg); /* Correct syntax */
     padding: 4px;
     border-radius:  0px 0px 8px 8px;
   }
@@ -115,10 +116,10 @@ nav {
     display: block;
   }
   
-  bav ul li ul li {
-    width: 180px;
-    border-radius: 6px;
-  }
+  nav ul li ul li {
+  width: 180px;
+  border-radius: 6px;
+}
   
   nav ul li ul li a {
   padding: 20px 24px;
