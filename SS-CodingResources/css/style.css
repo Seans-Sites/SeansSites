@@ -22,7 +22,7 @@ body {
   background-color: var(--primary-color); /* Set header background color */
   color: white; /* Set text color */
   padding: 10px; /* Add padding to the header */
-  font-family: 'arial', sans-serif; /* Override font family if needed */
+  font-family: Arial, sans-serif; /* Use the defined font family */
 }
 
 /* Increase text size */
@@ -42,7 +42,7 @@ body {
 
 /* Hover effect for buttons */
 .button:hover {
-  background-color: darken(var(--secondary-color), 10%); /* Darken button color on hover */
+  background-color: #5a6268; /* Use a darker color directly */
 }
 
 /* Layout styles for the site container */
@@ -65,71 +65,68 @@ body {
   height: auto; /* Maintain aspect ratio */
 }
 
-
-
 nav {
   width: 100%;
   height: 100px;
-  background-image: url(img/Espresso\ Solid\ Color.jpg); /* set background image */
-  }
-  
-  nav p {
-    font-family: sans-serif;
-    color: white;
-    font-size: 24px;
-    line-height: 55px;
-    float: left;
-    padding: 0px 20px;
-  }
-  
-  nav ul {
-    float: left;
-  }
-  
-  nav ul li {
-    float: left;
-    list-style: none;
-    position: relative;
-  }
-  
-  nav ul li a {
-    font-family: Arial, Helvetica, sans-serif;
-    color: white;
-    font-size: 24px;
-    line-height: 55px;
-    float: left;
-    padding: 10px 14px;
-    display: block;
-    text-decoration: none;
-  }
-  
-  nav ul li ul {
-    display: none;
-    position: absolute;
-    background-image: url(img/Espresso\ Solid\ Color.jpg); /* set background image */
-    padding: 4px;
-    border-radius:  0px 0px 8px 8px;
-  }
-  
-  nav ul li:hover ul {
-    display: block;
-  }
-  
-  bav ul li ul li {
-    width: 180px;
-    border-radius: 6px;
-  }
-  
-  nav ul li ul li a {
+  background-image: url('img/Espresso Solid Color.jpg'); /* Set background image */
+}
+
+nav p {
+  font-family: sans-serif;
+  color: white;
+  font-size: 24px;
+  line-height: 55px;
+  float: left;
+  padding: 0px 20px;
+}
+
+nav ul {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  float: left;
+  list-style: none;
+  position: relative;
+}
+
+nav ul li a {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 24px;
+  line-height: 55px;
+  float: left;
+  padding: 10px 14px;
+  display: block;
+  text-decoration: none;
+}
+
+nav ul li ul {
+  display: none;
+  position: absolute;
+  background-image: url('img/Espresso Solid Color.jpg'); /* Set background image */
+  padding: 4px;
+  border-radius: 0px 0px 8px 8px;
+}
+
+nav ul li:hover ul {
+  display: block;
+}
+
+nav ul li ul li {
+  width: 180px;
+  border-radius: 6px;
+}
+
+nav ul li ul li a {
   padding: 20px 24px;
-  
-  }
-  
-  nav ul li ul li a:hover{
-    background-color: rgb(131, 131, 131);
-  }
+}
 
-
+nav ul li ul li a:hover {
+  background-color: rgb(131, 131, 131);
+}
 
 .button-nav {
     display: flex;
@@ -153,8 +150,6 @@ nav {
     transform: scale(1.05);
 }
 
-
-
 #searchInput {
     padding: 10px;
     font-size: 16px;
@@ -177,30 +172,4 @@ nav {
 
 #itemList li.hidden {
     display: none;
-}
-
-
-
-#searchInput {
-	padding: 10px;
-	font-size: 16px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	margin-bottom: 10px;
-	width: 100%;
-	max-width: 400px;
-}
-
-#itemList {
-	list-style-type: none;
-	padding: 0;
-}
-
-#itemList li {
-	padding: 8px;
-	border-bottom: 1px solid #ddd;
-}
-
-#itemList li.hidden {
-	display: none;
 }
