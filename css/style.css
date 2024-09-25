@@ -1,0 +1,128 @@
+/* Define custom CSS variables for consistent theming */
+:root {
+  --primary-color: #007bff; /* Primary color for headers and buttons */
+  --secondary-color: #6c757d; /* Secondary color for buttons */
+  --background-color: rgb(46, 46, 46); /* Background color for the entire site */
+  --text-color: rgb(255, 255, 255); /* Text color for better readability */
+  --font-family: Arial, sans-serif; /* Default font family */
+  --border-radius: 5px; /* Common border radius for buttons and other elements */
+}
+
+/* Apply global styles to the body */
+body {
+  font-family: var(--font-family); /* Set the font family */
+  background-color: var(--background-color); /* Set the background color */
+  color: var(--text-color); /* Set the text color */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+/* Style for header */
+.header {
+  background-color: var(--primary-color); /* Set header background color */
+  color: white; /* Set text color */
+  padding: 10px; /* Add padding to the header */
+  font-family: 'arial', sans-serif; /* Override font family if needed */
+}
+
+/* Increase text size */
+.bigger-text {
+    font-size: 4em; /* Adjust the size as needed */
+}
+
+/* Style for buttons */
+.button {
+  background-color: var(--secondary-color); /* Set button background color */
+  color: white; /* Set text color */
+  border: none; /* Remove default border */
+  padding: 8px 16px; /* Add padding to the button */
+  border-radius: var(--border-radius); /* Apply border radius */
+  cursor: pointer; /* Set cursor style */
+}
+
+/* Hover effect for buttons */
+.button:hover {
+  background-color: darken(var(--secondary-color), 10%); /* Darken button color on hover */
+}
+
+/* Layout styles for the site container */
+.site-container {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow sites to wrap to the next row */
+  justify-content: center; /* Center align sites horizontally */
+}
+
+/* Style for individual site */
+.site {
+  margin: 10px; /* Add margin around each site */
+  text-align: center; /* Center align site content */
+  flex: 1 0 calc(25% - 40px); /* Default to four sites per row with spacing */
+}
+
+/* Ensure images within sites don't exceed their container */
+.site img {
+  max-width: 100%; /* Ensure images don't exceed their container width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+nav {
+  width: 100%;
+  height: 100px;
+  background-image: url(img/Espresso\ Solid\ Color.jpg); /* set background image */
+  }
+  
+  nav p {
+    font-family: sans-serif;
+    color: antiquewhite;
+    font-size: 24px;
+    line-height: 55px;
+    float: left;
+    padding: 0px 20px;
+  }
+  
+  nav ul {
+    float: left;
+  }
+  
+  nav ul li {
+    float: left;
+    list-style: none;
+    position: relative;
+  }
+  
+  nav ul li a {
+    font-family: Arial, Helvetica, sans-serif;
+    color: antiquewhite;
+    font-size: 24px;
+    line-height: 55px;
+    float: left;
+    padding: 10px 14px;
+    display: block;
+    text-decoration: none;
+  }
+  
+  nav ul li ul {
+    display: none;
+    position: absolute;
+    background-image: url(img/Espresso\ Solid\ Color.jpg); /* set background image */
+    padding: 4px;
+    border-radius:  0px 0px 8px 8px;
+  }
+  
+  nav ul li:hover ul {
+    display: block;
+  }
+  
+  bav ul li ul li {
+    width: 180px;
+    border-radius: 6px;
+  }
+  
+  nav ul li ul li a {
+  padding: 20px 24px;
+  
+  }
+  
+  nav ul li ul li a:hover{
+    background-color: rgb(131, 131, 131);
+  }
