@@ -104,10 +104,10 @@ nav {
     text-decoration: none;
   }
   
-  nav ul li ul {
+   nav ul li ul {
     display: none;
     position: absolute;
-    background-image: url(img/Espresso Solid Color.jpg); /* Correct syntax */
+    background-image: url(img/Espresso\ Solid\ Color.jpg); /* set background image */
     padding: 4px;
     border-radius:  0px 0px 8px 8px;
   }
