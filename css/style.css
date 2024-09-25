@@ -129,4 +129,28 @@ nav {
 
 
 
+.button-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.nav-button {
+    text-decoration: none;
+    color: white;
+    background-color: #6c757d;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-button:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+
+
 
