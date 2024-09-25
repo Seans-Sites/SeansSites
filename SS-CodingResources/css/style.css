@@ -1,11 +1,8 @@
 /* Define custom CSS variables for consistent theming */
 :root {
-  --primary-color: rgb(46, 46, 46; /* Primary color for headers and buttons */
-  --secondary-color: #6c757d; /* Secondary color for buttons */
   --background-color: rgb(46, 46, 46); /* Background color for the entire site */
   --text-color: rgb(255, 255, 255); /* Text color for better readability */
   --font-family: Arial, sans-serif; /* Default font family */
-  --border-radius: 5px; /* Common border radius for buttons and other elements */
 }
 
 /* Style for header */
