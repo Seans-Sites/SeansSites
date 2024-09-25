@@ -1,6 +1,6 @@
 /* Define custom CSS variables for consistent theming */
 :root {
-  --primary-color: #007bff; /* Primary color for headers and buttons */
+  --primary-color: rgb(46, 46, 46; /* Primary color for headers and buttons */
   --secondary-color: #6c757d; /* Secondary color for buttons */
   --background-color: rgb(46, 46, 46); /* Background color for the entire site */
   --text-color: rgb(255, 255, 255); /* Text color for better readability */
