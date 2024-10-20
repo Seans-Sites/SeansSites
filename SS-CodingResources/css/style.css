@@ -126,3 +126,25 @@ nav {
   nav ul li ul li a:hover{
     background-color: rgb(131, 131, 131);
   }
+
+
+.button-nav {
+    display: flex;
+    gap: 10px; /* Adds space between buttons */
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 10px 20px; /* Adjusts the padding for size */
+    background-color: gray; /* Button background color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 25px; /* Rounded corners */
+    text-decoration: none; /* Removes underline from links */
+    text-align: center; /* Centers text */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.nav-button:hover {
+    background-color: darkgray; /* Changes color on hover */
+}
