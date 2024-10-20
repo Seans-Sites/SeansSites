@@ -131,7 +131,8 @@ nav {
 
 .button-nav {
     display: flex;
-    gap: 10px; /* Adds space between buttons */
+    justify-content: center; /* Centers the buttons horizontally */
+    gap: 10px; /* Space between buttons */
 }
 
 .nav-button {
@@ -140,7 +141,7 @@ nav {
     background-color: gray; /* Button background color */
     color: white; /* Text color */
     border: none; /* No border */
-    border-radius: 25px; /* Rounded corners */
+    border-radius: 5px; /* Less rounded corners */
     text-decoration: none; /* Removes underline from links */
     text-align: center; /* Centers text */
     transition: background-color 0.3s; /* Smooth transition for hover effect */
