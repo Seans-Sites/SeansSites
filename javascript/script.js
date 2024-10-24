@@ -16,3 +16,5 @@ function updateTime() {
 // Update the time immediately and then every second
 updateTime();
 setInterval(updateTime, 1000);
+
+console.log('hello world');
